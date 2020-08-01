@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-const uint_max = ^uint(0)
+const uintMax = 1 << 16
 
 // Cron keeps track of any number of entries, invoking the associated func as
 // specified by the schedule. It may be started, stopped, and the entries may
@@ -125,7 +125,7 @@ func New(opts ...Option) *Cron {
 		logger:    DefaultLogger,
 		location:  time.Local,
 		parser:    standardParser,
-		nextID:    EntryID(uint_max),
+		nextID:    EntryID(uintMax),
 	}
 	for _, opt := range opts {
 		opt(c)

@@ -700,3 +700,22 @@ func stop(cron *Cron) chan bool {
 func newWithSeconds() *Cron {
 	return New(WithParser(secondParser), WithChain())
 }
+
+func TestNew(t *testing.T) {
+	c := New()
+	id, err := c.AddFunc("* * * * *", test)
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println(id)
+	id1, err1 := c.AddFunc("* * * * *", test)
+	if err1 != nil {
+		fmt.Println(err1)
+	}
+	fmt.Println(id1)
+	c.Start()
+}
+
+func test() {
+
+}
