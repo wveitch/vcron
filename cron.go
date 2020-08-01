@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-const uintMax = 1 << 16
+const uintMax = 1 << 32
 
 // Cron keeps track of any number of entries, invoking the associated func as
 // specified by the schedule. It may be started, stopped, and the entries may
