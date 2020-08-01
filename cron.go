@@ -7,6 +7,8 @@ import (
 	"time"
 )
 
+const uint_max = ^uint(0)
+
 // Cron keeps track of any number of entries, invoking the associated func as
 // specified by the schedule. It may be started, stopped, and the entries may
 // be inspected while running.
@@ -123,6 +125,7 @@ func New(opts ...Option) *Cron {
 		logger:    DefaultLogger,
 		location:  time.Local,
 		parser:    standardParser,
+		nextID:    EntryID(uint_max),
 	}
 	for _, opt := range opts {
 		opt(c)
@@ -158,7 +161,7 @@ func (c *Cron) AddJob(spec string, cmd Job) (EntryID, error) {
 func (c *Cron) Schedule(schedule Schedule, cmd Job) EntryID {
 	c.runningMu.Lock()
 	defer c.runningMu.Unlock()
-	c.nextID++
+	c.nextID--
 	entry := &Entry{
 		ID:         c.nextID,
 		Schedule:   schedule,
